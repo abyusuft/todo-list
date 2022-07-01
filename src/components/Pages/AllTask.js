@@ -27,6 +27,7 @@ const AllTask = () => {
                             <th>Added By</th>
                             <th>Task</th>
                             <th>Detail</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,7 @@ const AllTask = () => {
                                 <td>{m.email}</td>
                                 <td>{m.task}</td>
                                 <td>{m.detail}</td>
+                                <td>{m.status}</td>
                             </tr>)
                         }
 
