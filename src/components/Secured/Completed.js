@@ -21,6 +21,7 @@ const Completed = () => {
     }))
     if (isLoading) {
         <Loading></Loading>
+        refetch();
     }
     return (
         <div className='min-h-fit'>
