@@ -51,7 +51,7 @@ const ToDo = () => {
         }
     }
     return (
-        <div className='min-h-fit'>
+        <div className='cs-min-height'>
             <h2 className='text-center text-4xl font-bold mb-3'>Task To-Do List : </h2>
             <div className="overflow-x-auto">
                 <table className="table w-full">

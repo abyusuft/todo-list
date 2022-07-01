@@ -59,7 +59,7 @@ const AddTask = () => {
     }
 
     return (
-        <div>
+        <div className='cs-min-height'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control flex-row w-full max-w-xl mt-1">
                     <label className="label w-1/2">
