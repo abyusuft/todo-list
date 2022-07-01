@@ -15,7 +15,7 @@ const UpdateTask = () => {
     const navigate = useNavigate();
 
     const { taskid } = useParams();
-    const { data: task, isLoading, refetch } = useQuery('pendingTask', () => fetch(`http://localhost:5000/task/${taskid}`, {
+    const { data: task, isLoading, refetch } = useQuery('pendingTask', () => fetch(`https://desolate-sierra-98071.herokuapp.com/task/${taskid}`, {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -44,7 +44,7 @@ const UpdateTask = () => {
         };
 
         if (user?.email) {
-            fetch(`http://localhost:5000/update/${taskid}`, {
+            fetch(`https://desolate-sierra-98071.herokuapp.com/update/${taskid}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json',
@@ -61,7 +61,7 @@ const UpdateTask = () => {
                 })
                 .then(data => {
                     refetch();
-                    toast.success(`Review Added Successfully`);
+                    toast.success(`Task Updated`);
                     navigate('/todo');
                 })
         }

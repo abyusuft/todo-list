@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AddTask = () => {
     const [user] = useAuthState(auth);
-    const { data: userProfile, isLoading, refetch } = useQuery('userProfile', () => fetch(`http://localhost:5000/user/${user?.email}`, {
+    const { data: userProfile, isLoading, refetch } = useQuery('userProfile', () => fetch(`https://desolate-sierra-98071.herokuapp.com/user/${user?.email}`, {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -38,7 +38,7 @@ const AddTask = () => {
         };
 
         if (user?.email) {
-            fetch(`http://localhost:5000/task`, {
+            fetch(`https://desolate-sierra-98071.herokuapp.com/task`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

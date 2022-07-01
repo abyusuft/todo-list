@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ToDo = () => {
     const [user] = useAuthState(auth);
-    const { data: task, isLoading, refetch } = useQuery('pendingTask', () => fetch(`http://localhost:5000/pendingtask/${user?.email}`, {
+    const { data: task, isLoading, refetch } = useQuery('pendingTask', () => fetch(`https://desolate-sierra-98071.herokuapp.com/pendingtask/${user?.email}`, {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -29,7 +29,7 @@ const ToDo = () => {
     const handleComplete = (id) => {
         console.log(id)
         if (user?.email) {
-            fetch(`http://localhost:5000/markcomplete/${id}`, {
+            fetch(`https://desolate-sierra-98071.herokuapp.com/markcomplete/${id}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json',

@@ -7,7 +7,7 @@ import Loading from '../Shared/Loading';
 
 const Completed = () => {
     const [user] = useAuthState(auth);
-    const { data: task, isLoading, refetch } = useQuery('completed', () => fetch(`http://localhost:5000/completed/${user?.email}`, {
+    const { data: task, isLoading, refetch } = useQuery('completed', () => fetch(`https://desolate-sierra-98071.herokuapp.com/completed/${user?.email}`, {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
