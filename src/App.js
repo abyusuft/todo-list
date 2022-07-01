@@ -13,6 +13,7 @@ import Completed from './components/Secured/Completed';
 import ToDo from './components/Secured/ToDo';
 import Calender from './components/Pages/Calender';
 import AddTask from './components/Secured/AddTask';
+import UpdateTask from './components/Secured/UpdateTask';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/completed' element={<RequireAuth><Completed></Completed></RequireAuth>}></Route>
         <Route path='/todo' element={<RequireAuth><ToDo></ToDo></RequireAuth>}></Route>
         <Route path='/addtask' element={<RequireAuth><AddTask></AddTask></RequireAuth>}></Route>
+        <Route path='/update/:taskid' element={<UpdateTask />}></Route>
         <Route path='/home' element={<Home />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/signup' element={<Signup />}></Route>

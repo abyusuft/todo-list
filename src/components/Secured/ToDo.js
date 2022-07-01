@@ -5,6 +5,7 @@ import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 import { toast } from 'react-toastify';
 import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const ToDo = () => {
     const [user] = useAuthState(auth);
@@ -50,6 +51,10 @@ const ToDo = () => {
                 })
         }
     }
+    const navigate = useNavigate();
+    const handleEdit = (id) => {
+        navigate(`/update/${id}`);
+    }
     return (
         <div className='cs-min-height'>
             <h2 className='text-center text-4xl font-bold mb-3'>Task To-Do List : </h2>
@@ -65,11 +70,11 @@ const ToDo = () => {
                     </thead>
                     <tbody>
                         {
-                            task?.map(m => <tr key={m._id}>
+                            task?.map(m => <tr key={m?._id}>
                                 <td><input type="checkbox" onClick={() => handleComplete(m?._id)} /></td>
-                                <td>{m.task}</td>
-                                <td>{m.detail}</td>
-                                <td><button className='btn btn-primary text-white btn-sm'>Edit</button></td>
+                                <td>{m?.task}</td>
+                                <td>{m?.detail}</td>
+                                <td><button onClick={() => handleEdit(m?._id)} className='btn btn-primary text-white btn-sm'>Edit</button></td>
                             </tr>)
                         }
 

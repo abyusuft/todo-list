@@ -1,16 +1,21 @@
-import { signOut } from 'firebase/auth';
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import auth from '../../firebase.init';
-import Loading from '../Shared/Loading';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import Loading from '../Shared/Loading';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useForm } from 'react-hook-form';
+import auth from '../../firebase.init';
+import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-const AddTask = () => {
+const UpdateTask = () => {
+
     const [user] = useAuthState(auth);
-    const { data: userProfile, isLoading, refetch } = useQuery('userProfile', () => fetch(`http://localhost:5000/user/${user?.email}`, {
+    const navigate = useNavigate();
+
+    const { taskid } = useParams();
+    const { data: task, isLoading, refetch } = useQuery('pendingTask', () => fetch(`http://localhost:5000/task/${taskid}`, {
         method: 'GET',
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -25,26 +30,27 @@ const AddTask = () => {
     if (isLoading) {
         <Loading></Loading>
     }
-    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const navigate = useNavigate();
+    console.log(task)
+    console.log(taskid)
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-        const addTask = {
+        const updateTask = {
             email: user?.email,
-            name: userProfile?.name,
             task: data?.task,
             detail: data?.detail,
             status: 'pending'
         };
 
         if (user?.email) {
-            fetch(`http://localhost:5000/task`, {
-                method: 'POST',
+            fetch(`http://localhost:5000/update/${taskid}`, {
+                method: 'PUT',
                 headers: {
                     'content-type': 'application/json',
                     'authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
-                body: JSON.stringify(addTask)
+                body: JSON.stringify(updateTask)
             })
                 .then(res => {
                     if (res.status === 403) {
@@ -55,14 +61,15 @@ const AddTask = () => {
                 })
                 .then(data => {
                     refetch();
-                    toast.success(`Task Added Successfully`);
-                    navigate('/todo')
+                    toast.success(`Review Added Successfully`);
+                    navigate('/todo');
                 })
         }
     }
 
     return (
         <div className='cs-min-height'>
+            <h2 className='font-bold text-center text-4xl mb-5'>Upadte Task</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control flex-row w-full max-w-xl mt-1">
                     <label className="label w-1/2">
@@ -76,7 +83,7 @@ const AddTask = () => {
                             }
                         })}
                         type="text"
-                        placeholder='Insert Task Title'
+                        placeholder={task?.task}
                         className="input input-bordered w-full max-w-xs" />
                 </div>
                 <label className="label">
@@ -89,14 +96,14 @@ const AddTask = () => {
                     <input
                         {...register("detail")}
                         type="text"
-                        placeholder='Type Review'
+                        placeholder={task?.detail}
                         className="input input-bordered w-full max-w-xs" />
                 </div>
 
-                <input type="submit" className='btn btn-primary  text-white w-full mx-auto my-5' value='Add Task' />
+                <input type="submit" className='btn btn-primary  text-white w-full mx-auto my-5' value='Update Task' />
             </form>
         </div>
     );
 };
 
-export default AddTask;
+export default UpdateTask;
